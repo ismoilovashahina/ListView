@@ -17,7 +17,13 @@ class MainActivity : AppCompatActivity() {
 
         val productlist = productAPI()
 
-        val products_adapter = Product_Adapter(this, productlist)
+        val products_adapter = Product_Adapter(this, productlist, object :Product_Adapter.EditOnClickListener{
+            override fun onEdit(position: Int, product: Product) {
+                binding.editName.setText(product.name)
+                binding.editPrice.setText(product.price.toString())
+            }
+        })
+
         binding.productsListView.adapter = products_adapter
 
         binding.productsListView.setOnItemClickListener { adapterView, view, i, l ->

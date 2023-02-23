@@ -10,7 +10,8 @@ class ProductActivity : AppCompatActivity() {
         setContentView(R.layout.activity_product)
 
         var p = intent.getSerializableExtra("product") as Product
-        
+
+
 
     }
 }

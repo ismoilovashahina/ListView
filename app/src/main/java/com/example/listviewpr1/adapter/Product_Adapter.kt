@@ -10,7 +10,7 @@ import com.example.listviewpr1.R
 import com.example.listviewpr1.databinding.ItemProductBinding
 import com.example.listviewpr1.model.Product
 
- class Product_Adapter(context:Context, var productlist:MutableList<Product>)
+ class Product_Adapter(context:Context, var productlist:MutableList<Product>, var listener: EditOnClickListener)
     :ArrayAdapter<Product>(context, R.layout.item_product, productlist){
 
     override fun getCount(): Int {
@@ -27,7 +27,9 @@ import com.example.listviewpr1.model.Product
         else{
             binding = ItemProductBinding.bind(convertView)
         }
+
         val product = productlist[position]
+
         binding.productImg.load(product.img)
         binding.name.text = product.name
         binding.price.text = product.price.toString()
@@ -47,7 +49,19 @@ import com.example.listviewpr1.model.Product
             }
 
         }
+        binding.btnEdit.setOnClickListener {
+            listener.onEdit(position, product)
+        }
+        binding.btnDelete.setOnClickListener {
+            productlist.remove(product)
+            notifyDataSetChanged()
+        }
+
 
         return binding.root
+    }
+
+    interface EditOnClickListener {
+        fun onEdit(position: Int, product:Product)
     }
 }
